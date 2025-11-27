@@ -1,0 +1,7 @@
+<?xml version=“1.0” encoding=“utf-8”?>
+<resources>
+<string name=“ai_title”>Автоуслуги AI</string>
+<string name=“ai_hint”>Введите симптом/код ошибки/вопрос…</string>
+<string name=“ai_send”>Отправить</string>
+<string name=“ai_disclaimer”>автоуслуги AI — справочный помощник. Решения принимает специалист.</string>
+</resources>
