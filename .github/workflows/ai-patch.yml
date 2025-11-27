@@ -1,0 +1,63 @@
+name: AI APK Patch
+on:
+workflow_dispatch:
+inputs:
+apk_url:
+description: ‘Public URL of source APK (Yandex Disk direct or share link)’
+required: true
+type: string
+label:
+description: ‘Launcher label for AI activity’
+required: false
+default: ‘Автоуслуги AI’
+type: string
+base_url:
+description: ‘AI server base URL (leave empty to use offline demo text)’
+required: false
+default: ‘’
+type: string
+jobs:
+build:
+runs-on: ubuntu-latest
+steps:
+
+name: Checkout
+uses: actions/checkout@v4
+
+name: Install JDK
+uses: actions/setup-java@v4
+with:
+distribution: temurin
+java-version: ‘17’
+
+name: Install Android SDK build-tools
+run: |
+sudo mkdir -p /usr/local/lib/android/sdk
+echo “y” | sudo /usr/local/lib/android/sdkmanager “platforms;android-34” “build-tools;34.0.0”
+shell: bash
+
+name: Install apktool
+run: |
+curl -L -o apktool.jar https://github.com/iBotPeaches/Apktool/releases/download/v2.9.3/apktool_2.9.3.jar
+echo -e ‘#!/usr/bin/env bash\njava -jar “$(dirname “$0”)/apktool.jar” “$@”’ > apktool
+chmod +x apktool
+
+name: Download source APK
+run: |
+curl -L --output in.apk “${{ inputs.apk_url }}”
+ls -lh in.apk
+
+name: Patch APK
+run: |
+bash patch/build_ci.sh “$(pwd)/in.apk” “$(pwd)/out.apk” “${{ inputs.base_url }}” “${{ inputs.label }}”
+env:
+ANDROID_HOME: /usr/local/lib/android
+ANDROID_SDK_ROOT: /usr/local/lib/android
+shell: bash
+
+name: Upload artifact
+uses: actions/upload-artifact@v4
+with:
+name: app-ai-signed.apk
+path: out.apk
+if-no-files-found: error
