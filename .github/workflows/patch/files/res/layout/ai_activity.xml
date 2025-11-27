@@ -1,0 +1,13 @@
+<?xml version=“1.0” encoding=“utf-8”?>
+<LinearLayout xmlns:android=“http://schemas.android.com/apk/res/android”
+android:orientation=“vertical” android:padding=“12dp”
+android:layout_width=“match_parent” android:layout_height=“match_parent”>
+<ScrollView android:id=“@+id/scroll” android:layout_width=“match_parent” android:layout_height=“0dp” android:layout_weight=“1”>
+<LinearLayout android:id=“@+id/chat” android:orientation=“vertical” android:layout_width=“match_parent” android:layout_height=“wrap_content”/>
+</ScrollView>
+<TextView android:id=“@+id/status” android:textColor=“#888888” android:textSize=“12sp” android:layout_width=“match_parent” android:layout_height=“wrap_content”/>
+<LinearLayout android:layout_width=“match_parent” android:layout_height=“wrap_content” android:orientation=“horizontal”>
+<EditText android:id=“@+id/input” android:hint=“@string/ai_hint” android:layout_width=“0dp” android:layout_weight=“1” android:layout_height=“wrap_content”/>
+<Button android:id=“@+id/send” android:text=“@string/ai_send” android:layout_width=“wrap_content” android:layout_height=“wrap_content”/>
+</LinearLayout>
+</LinearLayout>
